@@ -1,4 +1,4 @@
 package com.spring.boot.controller;
 
-public class LoginController {
+public class AuthController {
 }
