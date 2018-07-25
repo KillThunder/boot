@@ -34,6 +34,10 @@ public class User implements Serializable {
     @Column(name = "state")
     private Byte state;
 
+    //最后修改密码时间
+    @Column(name = "last_password_reset_date")
+    private Date lastPasswordResetDate;
+
     @Column(name = "create_date")
     private Date createDate;
 
@@ -98,6 +102,14 @@ public class User implements Serializable {
 
     public void setState(Byte state) {
         this.state = state;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public Date getCreateDate() {

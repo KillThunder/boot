@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByLoginName(username);
-        if (null == user) {
+        if (null == user || 0 != user.getState()) {
             throw new UsernameNotFoundException("用户名不存在！");
         }
         //创建集合保存用户的权限，GrantedAuthority对象代表赋予当前用户的权限

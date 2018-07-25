@@ -1,4 +1,12 @@
 package com.spring.boot.service;
 
-public class AuthService {
+import com.spring.boot.pojo.User;
+
+public interface AuthService {
+
+    User register(User userToAdd);
+
+    String login(String username, String password);
+
+    String refresh(String oldToken);
 }

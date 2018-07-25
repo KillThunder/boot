@@ -9,11 +9,14 @@ server:
     max-threads: 10
 
 spring:
+  #thymeleaf模板引擎配置
   thymeleaf:
     encoding: utf-8
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
+    cache: false
+
   servlet:
     multipart:
       #上传文件的最大值
@@ -42,9 +45,29 @@ spring:
         #命名策略：遇到大写字母加"_"下划线的命名
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
+logging:
+  config: classpath:logback.xml
+
+
+# JWT
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 10
+  tokenHead: Bearer
+  route:
+    authentication:
+      path: auth/login
+      refresh: auth/refresh
+      register: auth/register
+
+myjwt:
+  jwtSecret: Mhqckey
+  jwtExpirationInMs: 604800000
+  REDIS_SESSION_KEY: REDIS_SESSION_KEY
+  SESSION_EXPIRE: 3600000
+
 #上传文件
 file:
   testPath: /home/killthunder/WorkSpase/uploadFile
 
-logging:
-  config: classpath:logback.xml
