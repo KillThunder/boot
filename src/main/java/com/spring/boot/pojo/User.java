@@ -1,6 +1,8 @@
 package com.spring.boot.pojo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,12 +16,15 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Column(name = "login_name")
     private String loginName;
 
+    @NotNull
     @Column(name = "user_name")
     private String userName;
 
+    @NotNull
     @Column(name = "pass_word")
     private String passWord;
 
@@ -30,20 +35,25 @@ public class User implements Serializable {
     @Column(name = "sex")
     private Byte sex;
 
+    @Null
     //当前用户状态（0：启用(默认)；1：禁用；2：删除）
     @Column(name = "state")
     private Byte state;
 
+    @Null
     //最后修改密码时间
     @Column(name = "last_password_reset_date")
     private Date lastPasswordResetDate;
 
+    @Null
     @Column(name = "create_date")
     private Date createDate;
 
+    @Null
     @Column(name = "update_date")
     private Date updateDate;
 
+    @Null
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roleList;

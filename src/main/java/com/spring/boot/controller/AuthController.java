@@ -5,10 +5,14 @@ import com.spring.boot.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 public class AuthController {
@@ -19,7 +23,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-//    @PostMapping(value = "/auth/login")
+    //    @PostMapping(value = "/auth/login")
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestParam("username") String username, @RequestParam("password") String password) throws AuthenticationException {
         //  @RequestBody JwtAuthenticationRequest authenticationRequest
@@ -42,8 +46,9 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "${jwt.route.authentication.register}")
-    public User register(@RequestBody User addedUser) throws AuthenticationException {
+    //    @PostMapping(value = "${jwt.route.authentication.register}")
+    @PostMapping(value = "/auth/register")
+    public User register(@Valid User addedUser) throws AuthenticationException {
         return authService.register(addedUser);
     }
 }
