@@ -1,5 +1,7 @@
 package com.spring.boot.controller;
 
+import com.spring.boot.util.KafkaProduce;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 
 @Controller
 public class indexController {
+
+    @Autowired
+    private KafkaProduce kafkaProduce;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -25,6 +30,7 @@ public class indexController {
 
     @RequestMapping("/login")
     public String login() {
+        kafkaProduce.send("测试测试");
         return "login";
     }
 

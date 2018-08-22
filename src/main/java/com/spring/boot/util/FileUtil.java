@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 
 @Component
 public class FileUtil {
@@ -73,5 +77,46 @@ public class FileUtil {
         File file = new File(getFilePath(path) + File.separator + fileName);
 
         return file;
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param response
+     * @param fileName 文件名
+     */
+    public void downloadFile(HttpServletResponse response, String fileName) {
+        fileName = fileName;
+        File file = new File(fileName);
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+            OutputStream os = response.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                os.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+            LOGGER.info("获取文件成功：" + fileName);
+        } catch (Exception e) {
+            LOGGER.error("读取文件失败：" + fileName, e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (Exception e) {
+                LOGGER.error("关闭文件流失败！" + fileName + e);
+                e.printStackTrace();
+            }
+
+        }
     }
 }

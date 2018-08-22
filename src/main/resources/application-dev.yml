@@ -45,6 +45,31 @@ spring:
         #命名策略：遇到大写字母加"_"下划线的命名
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
+  #============== kafka ===================
+  kafka:
+    # 指定kafka 代理地址，可以多个
+#    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: localhost:9092
+    #=============== provider  =======================
+    producer:
+      retries: 0
+      # 每次批量发送消息的数量
+      batch-size: 16384
+      buffer-memory: 33554432
+      # 指定消息key和消息体的编解码方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    #=============== consumer  =======================
+    consumer:
+      # 指定默认消费者group id
+      group-id: boot
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      # 指定消息key和消息体的编解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
 logging:
   config: classpath:logback.xml
 
@@ -66,6 +91,24 @@ myjwt:
   jwtExpirationInMs: 604800000
   REDIS_SESSION_KEY: REDIS_SESSION_KEY
   SESSION_EXPIRE: 3600000
+
+#阿里云OSS配置
+alioss:
+  #区域
+  endpoint: oss-cn-beijing.aliyuncs.com
+  #access账号
+  accessKeyId: LTAIqgIOUQTPwwYl
+  accessKeySecret: XN1aC45fMT0CSDPlonB7DVsijFojb4
+  #bucket名称
+  bucketName: mhqc-test
+  #签名url的有效时间；毫秒为单位
+  expiration: 60000
+  #临时访问凭证有效时间；秒为单位
+  expireTime: 600
+  #上传回调时调用的接口
+  callbackurl: https://bj.eduluc.cn/callback
+  #前端直传；文件最大为2M
+  fileSize: 2097152
 
 #上传文件
 file:

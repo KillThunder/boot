@@ -1,4 +1,4 @@
-package com.mhqc.mhqcrecordapi.tool;
+package com.spring.boot.util;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.HttpMethod;
